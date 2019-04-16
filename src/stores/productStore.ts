@@ -1,7 +1,7 @@
 import { observable, ObservableMap, action, runInAction } from 'mobx'
 import { ILiProductInfo, IProductDetail } from '@/interfaces/product'
 import shopService from '@/services/shopService'
-import mockPromise from '@/utils/mockPromise';
+import mockPromise from '@/utils/mockPromise'
 
 /**
  * 产品数据
@@ -38,29 +38,31 @@ class ProductStore implements IProductStore {
   }
 
   @action
-  async fetchProductData(params: { page: number; num?: number } = { page: 1 }) {
+  async fetchProductData (params: { page: number; num?: number } = { page: 1 }) {
     // 加入默认参数
     const reqParams = Object.assign({ num: 20 }, params)
 
     // 获取后端数据
     // const resData = await shopService.fetchProductList(reqParams)
+    // 模拟fetchProductList异步返回
     const resData = await mockPromise({
-      "lists": [
+      lists: [
         {
-          "price": 2500, //商口单价，单位分
-          "status": 1, //状态， 1：已上架 2：已下架
-          "sub_title": "奶茶", //子标题
-          "thumb": "https://img.alicdn.com/i4/436287656/TB2sQkAkYBmpuFjSZFuXXaG_XXa_!!436287656.jpg_400x400Q80.jpg",
-          "title": "黑糖奶茶",//标题
-          "product_id": 1 //商品ID
+          price: 2500, // 商口单价，单位分
+          status: 1, // 状态， 1：已上架 2：已下架
+          sub_title: 'Milk Tea Series: Green Milk Tea', // 子标题
+          thumb: 'https://www.leidenglai.com/image/weapp/server/product.jpg',
+          title: '小山绿奶茶', // 标题
+          product_id: 1 // 商品ID
         },
         {
-          "price": 2500, //商口单价，单位分
-          "status": 2, //状态， 1：已上架 2：已下架
-          "sub_title": "奶茶", //子标题
-          "thumb": "https://img.alicdn.com/i4/436287656/TB2sQkAkYBmpuFjSZFuXXaG_XXa_!!436287656.jpg_400x400Q80.jpg",
-          "title": "黑糖奶茶",//标题
-          "product_id": 2 //商品ID
+          price: 28000, // 商口单价，单位分
+          vip_price: 20000, // 商口单价，单位分
+          status: 2, // 状态， 1：已上架 2：已下架
+          sub_title: 'Mellow Latte: Royal No.9 Latte', // 子标题
+          thumb: 'https://www.leidenglai.com/image/weapp/server/product.jpg',
+          title: '皇家九号拿铁', // 标题
+          product_id: 2 // 商品ID
         }
       ]
     })
@@ -71,7 +73,6 @@ class ProductStore implements IProductStore {
       this.productData.merge(resData.lists.map(item => [item.product_id, item]))
       this.productListData.page = reqParams.page
       this.productListData.num = reqParams.num
-      // this.productListData.count = resData.count
 
       if (reqParams.page === 1) {
         // 加载第一页
@@ -84,7 +85,7 @@ class ProductStore implements IProductStore {
   }
 
   @action
-  async fetchProductDetail(productId) {
+  async fetchProductDetail (productId) {
     // 获取后端数据
     const resData = await shopService.fetchProductDetail({ product_id: productId })
 
@@ -98,7 +99,7 @@ class ProductStore implements IProductStore {
   }
 
   @action
-  async setProductStatus(productId: number, status: 1 | 2) {
+  async setProductStatus (productId: number, status: 1 | 2) {
     try {
       await shopService.setProductStatus({ product_id: productId, status })
 

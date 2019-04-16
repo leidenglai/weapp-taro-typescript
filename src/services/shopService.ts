@@ -4,7 +4,7 @@ import { IOrderDetail } from '@/interfaces/order'
 import { ISalesData, ISalesType } from '@/interfaces/dashborad'
 
 /**
- * 对应后端商家端相关 API
+ * 对应后端店铺相关 API
  */
 class ShopService {
   /**
@@ -12,8 +12,8 @@ class ShopService {
    */
   fetchProductList (params: { page: number; num: number }): Promise<{ count: number; lists: ILiProductInfo[] }> {
     return requestData({
-      method: 'POST',
-      api: 'storex/shop/product/lists',
+      method: 'GET',
+      api: 'product/lists',
       params
     })
   }
@@ -24,7 +24,7 @@ class ShopService {
   fetchProductDetail (params: { product_id: number }): Promise<IProductDetail> {
     return requestData({
       method: 'GET',
-      api: 'storex/shop/product/item',
+      api: 'product/item',
       params
     })
   }
@@ -35,7 +35,7 @@ class ShopService {
   setProductStatus (params: { product_id: number; status: 1 | 2 }): Promise<void> {
     return requestData({
       method: 'POST',
-      api: 'storex/shop/product/set_status',
+      api: 'product/set_status',
       params
     })
   }
@@ -45,8 +45,8 @@ class ShopService {
    */
   fetchOrderList (params: { page: number; num: number }): Promise<{ count: number; lists: IOrderDetail[] }> {
     return requestData({
-      method: 'POST',
-      api: 'storex/shop/order/my_lists',
+      method: 'GET',
+      api: 'order/my_lists',
       params
     })
   }
@@ -56,8 +56,8 @@ class ShopService {
    */
   fetchHisOrderList (params: { page: number; num: number }): Promise<{ count: number; lists: IOrderDetail[] }> {
     return requestData({
-      method: 'POST',
-      api: 'storex/shop/order/history_lists',
+      method: 'GET',
+      api: 'order/history_lists',
       params
     })
   }
@@ -68,7 +68,7 @@ class ShopService {
   fetchCancelOrder (params: { order_number: string }): Promise<void> {
     return requestData({
       method: 'POST',
-      api: 'storex/shop/order/cancel_payment_order',
+      api: 'order/cancel_payment_order',
       params
     })
   }
@@ -79,7 +79,7 @@ class ShopService {
   fetchConfirmOrder (params: { order_number: string }): Promise<void> {
     return requestData({
       method: 'POST',
-      api: 'storex/shop/order/receipt_order',
+      api: 'order/receipt_order',
       params
     })
   }
@@ -90,7 +90,7 @@ class ShopService {
   fetchPrintOrderCb (params: { order_number: string }): Promise<void> {
     return requestData({
       method: 'POST',
-      api: 'storex/shop/order/complete_order',
+      api: 'order/complete_order',
       params
     })
   }
@@ -102,8 +102,8 @@ class ShopService {
    */
   fetchSalesDataList (params: { type: ISalesType; page: number; num: number }): Promise<ISalesData> {
     return requestData({
-      method: 'POST',
-      api: 'storex/shop/order/statistics_lists',
+      method: 'GET',
+      api: 'order/statistics_lists',
       params
     })
   }

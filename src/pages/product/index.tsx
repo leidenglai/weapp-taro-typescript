@@ -102,13 +102,13 @@ class ProductPage extends Component {
               <View className={`${this.prefixCls}__img-wrap`} onClick={this.handleNavToDetail.bind(this, id)}>
                 <Image mode='aspectFill' src={thumb} className={`${this.prefixCls}__img-cont`} />
               </View>
-              <View>
+              <View className={`${this.prefixCls}__cont-wrap`}>
                 <View className={`${this.prefixCls}__info-wrap`} onClick={this.handleNavToDetail.bind(this, id)}>
                   <View className={`${this.prefixCls}__info-title`}>{title}</View>
-                  <View className={`${this.prefixCls}__info-cont`}>{sub_title}</View>
+                  <View className={`${this.prefixCls}__info-text`}>{sub_title}</View>
                 </View>
-                <View className={`${this.prefixCls}__info-cont`}>
-                  <View>
+                <View className={`${this.prefixCls}__bottom`}>
+                  <View className={`${this.prefixCls}__bottom-left`}>
                     <View className='price'>￥{transformPrice(price, false)}</View>
                     <Text className='vip-price'>{vip_price > 0 ? `￥${transformPrice(vip_price, false)}` : ''}</Text>
                     {vip_price > 0 && <Text className='icon iconVip' />}

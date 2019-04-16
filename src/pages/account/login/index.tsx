@@ -3,6 +3,7 @@ import { View } from '@tarojs/components'
 import { AtForm, AtInput, AtButton } from 'taro-ui'
 import './index.scss'
 import userService from '@/services/userService'
+import mockPromise from '@/utils/mockPromise'
 
 /** 当前页面路由参数 */
 interface IRouter {
@@ -36,7 +37,9 @@ class AccountLoginPage extends Component<{}, IState> {
     const { password, username } = this.state
     const { redirect } = this.$router.params as IRouter
 
-    userService.fetchUserLogin({ username, password, os_type: 1 }).then(
+    // userService.fetchUserLogin({ username, password, os_type: 1 }).then(
+    console.log(password, username)
+    mockPromise({ access_token: 'xxxxx' }).then(
       res => {
         // 登陆成功
         // 将access_token存在本地

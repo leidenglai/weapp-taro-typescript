@@ -1,16 +1,16 @@
 import requestData from '@/utils/requestData'
 
 /**
- * 对应后端商家用户端相关 API
+ * 对应后端用户相关 API
  */
 class UserService {
   /**
-   * 获取首页滑动分类
+   * 用户登录
    */
   fetchUserLogin (params: { username: string; password: string; os_type?: 1 }): Promise<{ access_token: string }> {
     return requestData({
-      method: 'POST',
-      api: 'passport/user/user/login',
+      method: 'GET',
+      api: 'user/login',
       params
     })
   }
