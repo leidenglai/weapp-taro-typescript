@@ -11,8 +11,6 @@
 
 ## 开发环境
 
-nodejs
-
 VSCode 安装 Settings Sync 插件，同步 gist：7b096d9f0a4ac0c68f727930c27fd8f4
 
 yarn
