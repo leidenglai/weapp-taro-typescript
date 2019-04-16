@@ -1,4 +1,4 @@
-# 奶茶店卖家端
+# 使用 React 和 TypeScript 写小程序
 
 微信小程序端，使用 Taro 框架。React+TypeScript 语法，Mobx 管理数据，Taro UI 框架。
 
