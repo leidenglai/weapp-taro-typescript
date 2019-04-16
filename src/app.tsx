@@ -4,7 +4,6 @@ import { Provider } from '@tarojs/mobx'
 import CommonStore from './stores/commonStore'
 import UserStore from './stores/userStore'
 import ProductStore from './stores/productStore'
-import DashboradStore from './stores/dashboradStore'
 import OrderStore from './stores/orderStore'
 
 import './app.scss'
@@ -13,7 +12,6 @@ const store = {
   commonStore: new CommonStore(),
   userStore: new UserStore(),
   productStore: new ProductStore(),
-  dashboradStore: new DashboradStore(),
   orderStore: new OrderStore()
 }
 
@@ -30,7 +28,6 @@ class App extends Component {
       'pages/index/index',
       'pages/account/login/index',
       'pages/bluetooth/index',
-      'pages/dashborad/index',
       'pages/order/index',
       'pages/product/index',
       'pages/product/detail/index'
