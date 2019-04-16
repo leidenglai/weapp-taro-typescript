@@ -1,4 +1,17 @@
+$color-brand: #ff6140;
+$color-brand-light: #ff8970;
+$color-brand-dark: #cc4e33;
+
 @import '~taro-ui/dist/style/components/button.scss';
+
+.at-button {
+  height: 100px;
+  line-height: 100px;
+  width: 330px;
+  margin: 0;
+  font-size: 36px;
+  font-weight: 500;
+}
 
 .bluetoothPage {
   padding: 30px;

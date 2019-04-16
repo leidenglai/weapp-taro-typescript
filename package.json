@@ -2,7 +2,7 @@
   "name": "teashop-seller",
   "version": "1.0.0",
   "private": true,
-  "description": "微信小程序 奶茶店卖家端 使用Taro框架",
+  "description": "微信小程序 React+TypeScript 使用Taro框架",
   "main": "index.js",
   "scripts": {
     "build:weapp": "taro build --type weapp",
