@@ -1,0 +1,6 @@
+package.json
+package-lock.json
+project.config.json
+**/src/libs/**
+**/node_modules/**
+**/dist/**

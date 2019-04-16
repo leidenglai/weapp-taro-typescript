@@ -1,0 +1,76 @@
+$color-brand: #ff6140;
+$color-brand-light: #ff8970;
+$color-brand-dark: #cc4e33;
+
+.index {
+  &__page {
+    width: auto;
+    padding: 70px 10px 0;
+    background-color: #fff;
+    background-image: url(https://img.loverenren.com/miniprogram/seller/images/cdn/bg-index.png);
+    background-size: 100% auto;
+    background-position: center;
+    min-height: 100vh;
+  }
+
+  &__item-card {
+    width: 50%;
+    box-sizing: border-box;
+    padding: 12px 20px;
+  }
+
+  &__nav-wrap {
+    display: flex;
+    flex-flow: wrap;
+  }
+
+  &__card-box {
+    width: 100%;
+    height: 210px;
+    background-color: #fff;
+    box-shadow: 0 8px 26px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    text-align: center;
+    padding-top: 32px;
+    box-sizing: border-box;
+
+    .title {
+      color: #333;
+      font-size: 26px;
+      padding-top: 10px;
+    }
+
+    .icon {
+      display: block;
+      width: 90px;
+      height: 90px;
+      margin: 0 auto;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 90px 90px;
+    }
+
+    .iconNavProduct {
+      background-size: 88px 90px;
+      background-image: url(../../assets/images/icon/icon-nav-1.png);
+    }
+
+    .iconNavOrder {
+      background-image: url(../../assets/images/icon/icon-nav-2.png);
+    }
+
+    .iconNavOrderHis {
+      background-size: 92px 90px;
+      background-image: url(../../assets/images/icon/icon-nav-3.png);
+    }
+
+    .iconNavDashboard {
+      background-image: url(../../assets/images/icon/icon-nav-4.png);
+    }
+
+    .iconNavBlurt {
+      background-size: 84px 84px;
+      background-image: url(../../assets/images/icon/icon-nav-5.png);
+    }
+  }
+}

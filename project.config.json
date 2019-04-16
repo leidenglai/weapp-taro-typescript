@@ -1,0 +1,16 @@
+{
+  "miniprogramRoot": "dist/",
+  "projectname": "teashop-seller",
+  "description": "微信小程序 奶茶店卖家端 使用tora框架",
+  "appid": "wxd33f69e4f6042184",
+  "setting": {
+    "urlCheck": false,
+    "es6": false,
+    "postcss": false,
+    "minified": false,
+    "newFeature": true,
+    "autoAudits": false
+  },
+  "compileType": "miniprogram",
+  "condition": {}
+}

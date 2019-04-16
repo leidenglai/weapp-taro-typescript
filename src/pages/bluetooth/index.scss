@@ -1,0 +1,31 @@
+@import '~taro-ui/dist/style/components/button.scss';
+
+.bluetoothPage {
+  padding: 30px;
+}
+
+.deviceList {
+  .item {
+    display: flex;
+    color: #3e4a59;
+    padding: 20px 0;
+    font-size: 28px;
+    margin-top: 20px;
+    background-color: #ffa850;
+    border-radius: 10px;
+    // prettier-ignore
+    border-bottom: 1Px solid #68baea;
+
+    .name {
+      width: 160px;
+      margin-right: 24px;
+    }
+
+    .deviceId {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

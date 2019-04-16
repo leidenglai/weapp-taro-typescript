@@ -1,0 +1,10 @@
+{
+  "ignoreFiles": ["*.js", " *.ts", " *.tsx"],
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "unit-case": null,
+    "no-descending-specificity": [true, {"severity": "warning"}],
+    "selector-type-no-unknown": [true, {"ignoreTypes": ["page"]}],
+    "block-no-empty": null
+  }
+}
