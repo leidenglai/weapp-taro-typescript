@@ -99,3 +99,7 @@ yarn build:weapp
 — README.md // 项目文档
 - project.config.json // 小程序配置文件
 ```
+
+##**PS**
+
+1.  如果出现 node-saas 导致安装失败，可以将 yarn 源切换到淘宝的再试试 `yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g`
