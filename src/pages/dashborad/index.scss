@@ -1,0 +1,88 @@
+$color-brand: #ff6140;
+$color-brand-light: #ff8970;
+$color-brand-dark: #cc4e33;
+
+@import '~taro-ui/dist/style/components/tabs.scss';
+
+.at-tabs {
+  &__header {
+    position: fixed;
+    z-index: 1;
+
+  }
+
+  &-pane {
+    padding-top: 86px;
+  }
+}
+
+.dashboardPage {
+  background-color: #f6f6f6;
+  min-height: 100vh;
+}
+
+.listWrap {
+  padding: 20px;
+
+  .topInfo {
+    font-size: 24px;
+    font-weight: 400;
+    color: rgba(102, 102, 102, 1);
+    text-align: right;
+  }
+
+  .orderItem {
+    background-color: #fff;
+    margin-top: 20px;
+    padding: 20px 30px;
+  }
+
+  .title {
+    font-size: 32px;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+    line-height: 24px;
+  }
+
+  .info {
+    margin-top: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .infoText {
+      font-size: 26px;
+      font-weight: 400;
+      color: rgba(153, 153, 153, 1);
+      line-height: 24px;
+    }
+
+    .infoNum {
+      font-size: 48px;
+      font-weight: 500;
+      color: rgba(51, 51, 51, 1);
+      line-height: 24px;
+    }
+  }
+
+  .price {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .left {
+      font-size: 32px;
+      font-weight: 500;
+      color: rgba(255, 44, 0, 1);
+      line-height: 24px;
+    }
+
+    .right {
+      font-size: 32px;
+      font-weight: 500;
+      color: rgba(51, 51, 51, 1);
+      line-height: 24px;
+    }
+  }
+}
