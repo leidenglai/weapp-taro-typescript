@@ -1,16 +1,14 @@
 $color-brand: #ff6140;
 $color-brand-light: #ff8970;
 $color-brand-dark: #cc4e33;
+$color-border-base: #ccc;
 
 @import '~taro-ui/dist/style/components/button.scss';
 
-.at-button {
-  height: 100px;
-  line-height: 100px;
-  width: 330px;
-  margin: 0;
-  font-size: 36px;
-  font-weight: 500;
+.at-loading,
+.at-loading__ring {
+  width: 32px;
+  height: 32px;
 }
 
 .bluetoothPage {
@@ -20,18 +18,18 @@ $color-brand-dark: #cc4e33;
 .deviceList {
   .item {
     display: flex;
-    color: #3e4a59;
-    padding: 20px 0;
+    color: #333;
+    padding: 16px 8px;
     font-size: 28px;
     margin-top: 20px;
-    background-color: #ffa850;
+    background-color: #f1f1f1;
     border-radius: 10px;
     // prettier-ignore
-    border-bottom: 1Px solid #68baea;
+    border-bottom: 1Px solid #d6d6d6;
 
     .name {
-      width: 160px;
-      margin-right: 24px;
+      width: 200px;
+      margin-right: 16px;
     }
 
     .deviceId {

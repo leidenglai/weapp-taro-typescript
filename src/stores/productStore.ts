@@ -1,4 +1,4 @@
-import { observable, ObservableMap, action, runInAction } from 'mobx'
+import { observable, ObservableMap, action, runInAction, computed, decorate } from 'mobx'
 import { ILiProductInfo, IProductDetail } from '@/interfaces/product'
 import shopService from '@/services/shopService'
 import mockPromise from '@/utils/mockPromise'
@@ -8,7 +8,7 @@ import mockPromise from '@/utils/mockPromise'
  **/
 export interface IProductStore {
   /** 产品数据源 */
-  productData: Map<number, ILiProductInfo | IProductDetail>
+  productData: Map<number, ILiProductInfo>
 
   /** 列表页面数据 */
   productListData: {
@@ -18,16 +18,24 @@ export interface IProductStore {
     count: number
   }
 
+  /** 列表数据是否已经请求完 */
+  listIsEnd: boolean
+
+  /** 产品详情 */
+  productDatailData: IProductDetail | { product_id: number }
+
   /** 获取产品数据, 默认请求第一页20条数据 */
   fetchProductData: (params?: { page: number; num?: number }) => Promise<any>
   /** 获取产品详情 */
   fetchProductDetail: (product_id: number) => Promise<void>
   /** 设置商品上下架 */
   setProductStatus: (productId: number, status: 1 | 2) => Promise<any>
+  /** 设置商品库存 */
+  setProductStock: (productId: number, sku: string, stock: number) => Promise<void>
 }
 
 class ProductStore implements IProductStore {
-  productData: ObservableMap<number, ILiProductInfo | IProductDetail> = observable.map()
+  productData: ObservableMap<number, ILiProductInfo> = observable.map({}, { deep: false })
 
   @observable
   productListData = {
@@ -35,6 +43,15 @@ class ProductStore implements IProductStore {
     page: 1,
     num: 0,
     count: 0
+  }
+
+  @computed
+  get listIsEnd () {
+    if (this.productListData.ids.length <= 0) {
+      return false
+    }
+
+    return this.productListData.ids.length < this.productListData.page * 20
   }
 
   @action
@@ -70,7 +87,13 @@ class ProductStore implements IProductStore {
 
     runInAction(() => {
       // 填入产品map对象
-      this.productData.merge(resData.lists.map(item => [item.product_id, item]))
+      this.productData.merge(
+        resData.lists.map(item => {
+          decorate(item, { status: observable })
+
+          return [item.product_id, item]
+        })
+      )
       this.productListData.page = reqParams.page
       this.productListData.num = reqParams.num
 
@@ -79,22 +102,24 @@ class ProductStore implements IProductStore {
         this.productListData.ids = idList
       } else {
         // 翻页
-        this.productListData.ids.concat(idList)
+        this.productListData.ids.push(...idList)
       }
     })
   }
+
+  @observable.ref
+  productDatailData: any = { product_id: 0 }
 
   @action
   async fetchProductDetail (productId) {
     // 获取后端数据
     const resData = await shopService.fetchProductDetail({ product_id: productId })
+    // 获取富文本
+    const resContentData = await shopService.fetchProductDesc({ product_id: productId })
 
     runInAction(() => {
-      if (this.productData.get(productId)) {
-        Object.assign(this.productData.get(productId), resData)
-      } else {
-        this.productData.set(productId, resData)
-      }
+      // 细粒度的控制observable
+      this.productDatailData = decorate(Object.assign(resData, resContentData), { stock_lists: observable })
     })
   }
 
@@ -109,6 +134,18 @@ class ProductStore implements IProductStore {
     } catch (err) {
       console.log('修改失败：', err)
     }
+  }
+
+  @action
+  async setProductStock (productId: number, sku: string, stock: number) {
+    await shopService.fetchUpdateSkuStock({ product_id: productId, product_sku: sku, number: stock })
+
+    const stock_lists = this.productDatailData.stock_lists as IProductDetail['stock_lists']
+    const index = stock_lists.findIndex(item => item.product_sku === sku)
+
+    runInAction(() => {
+      this.productDatailData.stock_lists[index].number = stock
+    })
   }
 }
 

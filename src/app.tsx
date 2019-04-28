@@ -38,7 +38,8 @@ class App extends Component {
       navigationBarTitleText: '首页',
       backgroundTextStyle: 'light',
       backgroundColor: '#ffffff'
-    }
+    },
+    permission: { 'scope.userLocation': { desc: '用于连接蓝牙设备打印票据' }}
   }
 
   componentDidMount () {}

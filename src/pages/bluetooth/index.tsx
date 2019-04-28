@@ -1,4 +1,4 @@
-import Taro, { Component, Config, getBLEDeviceServices, getBluetoothDevices } from '@tarojs/taro'
+import Taro, { Component, Config, getBluetoothDevices } from '@tarojs/taro'
 import { observer, inject } from '@tarojs/mobx'
 import _ from 'lodash'
 import { View } from '@tarojs/components'
@@ -6,7 +6,9 @@ import './index.scss'
 import wrapUserAuth from '@/components/HOC/wrapUserAuth'
 import { AtButton } from 'taro-ui'
 import { ICommonStore } from '@/stores/commonStore'
-import { action, runInAction } from 'mobx'
+import { IBLEInformation } from '@/interfaces/common'
+import getBELSeviceId from '@/utils/getBELSeviceId'
+import { runInAction } from 'mobx'
 
 interface IState {
   /** 已知的蓝牙设备列表 */
@@ -30,6 +32,11 @@ class BluetoothPage extends Component<{}, IState> {
     return this.props as InjectStoreProps
   }
 
+  private BLEInformation: IBLEInformation = {
+    platform: '',
+    deviceId: ''
+  }
+
   /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -47,22 +54,19 @@ class BluetoothPage extends Component<{}, IState> {
     isScanning: false
   }
 
-  @action
   componentDidMount () {
-    const { BLEInformation, sysinfo } = this.inject.commonStore
+    const { sysinfo } = this.inject.commonStore
 
     Object.assign(sysinfo, Taro.getSystemInfoSync())
-    BLEInformation.platform = sysinfo.platform
+    this.BLEInformation.platform = sysinfo.platform
 
-    console.log(sysinfo)
+    console.log('系统信息:', sysinfo)
   }
 
   onPullDownRefresh () {
-    this.handleStartSearch()
-  }
-
-  componentWillUnmount () {
-    Taro.closeBluetoothAdapter()
+    this.handleStartSearch().then(() => {
+      Taro.stopPullDownRefresh()
+    })
   }
 
   /**
@@ -72,7 +76,8 @@ class BluetoothPage extends Component<{}, IState> {
     // console.log('lichao', 'closeBluetoothAdapter')
     console.log('开始搜索')
     Taro.closeBluetoothAdapter()
-    Taro.openBluetoothAdapter()
+
+    return Taro.openBluetoothAdapter()
       .then(() =>
         // 初始化蓝牙模块
         Taro.getBluetoothAdapterState())
@@ -105,10 +110,7 @@ class BluetoothPage extends Component<{}, IState> {
   }
 
   checkPemission = () => {
-    const {
-      BLEInformation: { platform },
-      sysinfo: { system }
-    } = this.inject.commonStore
+    const { sysinfo: { system, platform }} = this.inject.commonStore
 
     if (platform == 'ios') {
       this.getBluetoothDevices()
@@ -118,18 +120,29 @@ class BluetoothPage extends Component<{}, IState> {
 
       console.log('android系统版本:', systemVersion)
       if (systemVersion && parseInt(systemVersion[1]) > 5) {
-        Taro.getSetting({
-          success (res) {
+        Taro.getSetting()
+          .then(res => {
             console.log('当前用户设置：', res)
             if (!res.authSetting['scope.userLocation']) {
-              Taro.authorize({ scope: 'scope.userLocation' }).then(() => {
-                this.getBluetoothDevices()
-              })
+              // 获取位置授权
+              return Taro.authorize({ scope: 'scope.userLocation' })
             } else {
-              this.getBluetoothDevices()
+              return Promise.resolve({})
             }
-          }
-        })
+          })
+          .then(() => {
+            this.getBluetoothDevices()
+          })
+          .catch(err => {
+            console.log('位置授权获取失败：', err)
+            console.log('请在设置界面重新授权后搜索蓝牙')
+
+            Taro.openSetting().then(res => {
+              if (res.authSetting['scope.userLocation'] === true) {
+                Taro.showToast({ title: '授权成功，请重新搜索' })
+              }
+            })
+          })
       }
     }
   }
@@ -167,10 +180,7 @@ class BluetoothPage extends Component<{}, IState> {
    * 处理连接蓝牙
    * @param device 蓝牙设备数据
    */
-  @action
   handleConnect (device: getBluetoothDevices.PromisedPropDevicesItem) {
-    const { commonStore } = this.inject
-
     console.log('开始连接：', device)
 
     // 停止搜寻附近的蓝牙外围设备
@@ -180,12 +190,31 @@ class BluetoothPage extends Component<{}, IState> {
     Taro.createBLEConnection({ deviceId: device.deviceId }).then(
       () => {
         console.log('连接成功：', device.deviceId)
+        this.BLEInformation.deviceId = device.deviceId
         // 连接成功 获取服务
-        this.getSeviceId(device.deviceId)
+        // this.getSeviceId(device.deviceId)
+        getBELSeviceId(this.BLEInformation.deviceId)
+          .then(newBLEInformation => {
+            Taro.hideLoading()
+            // 保存本地下次，用于下次快速连接
+            Taro.setStorageSync('BLEInformation', this.BLEInformation)
+            Taro.navigateBack().then(() => Taro.showToast({ title: '连接成功' }))
 
-        runInAction(() => {
-          commonStore.BLEInformation.deviceId = device.deviceId
-        })
+            runInAction(() => {
+              this.inject.commonStore.isBELconnect = true
+              this.inject.commonStore.isBELservices = true
+              this.inject.commonStore.BLEServices = newBLEInformation
+            })
+          })
+          .catch(err => {
+            console.log(err)
+
+            typeof err === 'string' &&
+              Taro.showModal({
+                title: '提示',
+                content: '找不到该蓝牙设备读写的特征值'
+              })
+          })
       },
       err => {
         console.log('连接失败: ', err)
@@ -196,104 +225,6 @@ class BluetoothPage extends Component<{}, IState> {
         Taro.hideLoading()
       }
     )
-  }
-
-  /**
-   * 获取蓝牙设备所有服务(service)
-   */
-  getSeviceId = deviceId => {
-    // const platform = this.BLEInformation.platform
-
-    Taro.getBLEDeviceServices({ deviceId }).then(res => {
-      console.log('获取蓝牙设备所有 service:', res)
-      // var realId = ''
-      // if (platform == 'android') {
-      //   // for(var i=0;i<res.services.length;++i){
-      //   // var item = res.services[i].uuid
-      //   // if (item == "0000FEE7-0000-1000-8000-00805F9B34FB"){
-      //   realId = "0000FEE7-0000-1000-8000-00805F9B34FB"
-      //   //       break;
-      //   //     }
-      //   // }
-      // } else if (platform == 'ios') {
-      //   // for(var i=0;i<res.services.length;++i){
-      //   // var item = res.services[i].uuid
-      //   // if (item == "49535343-FE7D-4AE5-8FA9-9FAFD205E455"){
-      //   realId = "49535343-FE7D-4AE5-8FA9-9FAFD205E455"
-      //   // break
-      //   // }
-      //   // }
-      // }
-      // app.BLEInformation.serviceId = realId
-      this.getCharacteristics(res.services)
-    })
-  }
-
-  /**
-   * 获取蓝牙设备notify、read、write特征值(characteristic)
-   * @param services 蓝牙的设备服务列表
-   */
-  @action
-  async getCharacteristics (services: getBLEDeviceServices.PromisedPropServices) {
-    const { BLEInformation } = this.inject.commonStore
-    const findChar = { read: false, write: false, notify: false } // 特征值的寻找状态
-
-    // 串行迭代 获取特征值
-    for (const service of services) {
-      const { characteristics } = await Taro.getBLEDeviceCharacteristics({
-        deviceId: BLEInformation.deviceId,
-        serviceId: service.uuid
-      })
-
-      console.log(`获取蓝牙设备服务(${service.uuid})中的所有特征值: `, characteristics)
-
-      characteristics.forEach(item => {
-        if (!findChar.notify && item.properties.notify) {
-          findChar.notify = true
-          runInAction(() => {
-            BLEInformation.notifyCharaterId = item.uuid
-            BLEInformation.notifyServiceId = service.uuid
-          })
-        }
-        if (!findChar.read && item.properties.read) {
-          findChar.read = true
-          runInAction(() => {
-            BLEInformation.readCharaterId = item.uuid
-            BLEInformation.readServiceId = service.uuid
-          })
-        }
-        if (!findChar.write && item.properties.write) {
-          findChar.write = true
-          runInAction(() => {
-            BLEInformation.writeCharaterId = item.uuid
-            BLEInformation.writeServiceId = service.uuid
-          })
-        }
-      })
-
-      // notify、read、write 特征值都已找到 跳出循环
-      if (_.every(findChar, v => v)) {
-        // 跳出循环
-        break
-      }
-    }
-
-    console.log('连接成功，获得权限：', findChar)
-
-    Taro.hideLoading()
-    // notify、read、write 部分或者全部未找到完全
-    if (!_.every(findChar, v => v)) {
-      Taro.showModal({
-        title: '提示',
-        content: '找不到该蓝牙设备读写的特征值'
-      })
-    } else {
-      Taro.showToast({ title: '连接成功' }).then(() => {
-        setTimeout(() => {
-          Taro.navigateBack()
-        }, 2000)
-      })
-    }
   }
 
   render () {

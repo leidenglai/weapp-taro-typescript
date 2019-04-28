@@ -1,11 +1,14 @@
 export interface IOrderDetail {
   /** 订单号 */
   order_number: string
-  // TODO
   /** 订单序号 */
-  order_no: number
+  take_number: number
   /** 商品金额 */
   sum_money: number
+  /** 买家电话 */
+  buy_phone: string
+  /** 打印信息 */
+  print_data: (number | string)[][]
   product_lists: {
     /** 数量 */
     num: number

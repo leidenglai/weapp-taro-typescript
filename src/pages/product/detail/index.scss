@@ -1,3 +1,123 @@
+$color-brand: #ff6140;
+$color-brand-light: #ff8970;
+$color-brand-dark: #cc4e33;
+$color-border-base: #ccc;
+
+@import '~taro-ui/dist/style/components/input.scss';
+
+.at-input {
+  background-color: #fff;
+  margin-left: 0;
+  margin-bottom: 0;
+  padding: 0 0;
+  font-size: 28px;
+
+  &__title {
+    font-size: 28px;
+    width: 80px;
+  }
+
+  &::after {
+    border: none;
+  }
+
+  & input {
+    font-size: 28px;
+    width: 124px;
+    text-align: center;
+    color: $color-brand;
+    // prettier-ignore
+    border: 1Px solid rgba(153, 153, 153, 1);
+    border-radius: 10px;
+    padding-left: 18px;
+  }
+}
+
 .index {
   width: auto;
+}
+
+.productPage {
+  background-color: #f6f6f6;
+}
+
+.productSwiper {
+  width: 750px;
+  height: 750px;
+
+  image {
+    width: 750px;
+    height: 750px;
+  }
+}
+
+.productInfoWrap {
+  padding: 30px 20px 20px;
+  background-color: #fff;
+
+  .infoName {
+    font-size: 28px;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+  }
+
+  .infoDesc {
+    font-size: 22px;
+    font-weight: 400;
+    color: rgba(102, 102, 102, 1);
+    margin-top: 20px;
+  }
+
+  .infoComment {
+    font-size: 28px;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    margin-top: 30px;
+  }
+}
+
+.stockWrap {
+  background-color: #fff;
+  margin-top: 20px;
+
+  .skuItem {
+    display: flex;
+    padding: 10px 20px;
+    height: 80px;
+    align-items: center;
+  }
+
+  .name {
+    font-size: 28px;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+    min-width: 140px;
+  }
+
+  .stock {
+    font-size: 28px;
+    color: rgba(51, 51, 51, 1);
+  }
+
+  .stockNum {
+    font-size: 28px;
+    color: rgba(255, 44, 0, 1);
+    text-align: left;
+    margin-left: 30px;
+  }
+}
+
+.productDetailWrap {
+  .text {
+    padding: 20px 0;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 400;
+    color: rgba(153, 153, 153, 1);
+  }
+
+  .content {
+    min-height: 144px;
+    background-color: #fff;
+  }
 }

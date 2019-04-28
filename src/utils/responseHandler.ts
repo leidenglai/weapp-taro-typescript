@@ -15,7 +15,7 @@ export default function responseHandler (response: request.Promised<any>) {
     }
 
     // 业务报错
-    if (response.data.error_code === 120101) {
+    if (response.data.error_code === 401) {
       // 清除过期的登录状态
       Taro.removeStorageSync('access_token')
       // 跳转到登录页

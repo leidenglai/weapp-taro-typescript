@@ -45,3 +45,26 @@ export interface ComponentClass<P = {}> {
   defaultProps?: Partial<P>
   displayName?: string
 }
+
+/** 蓝牙数据 */
+export interface IBLEInformation {
+  platform?: string
+  /** 设备的 id */
+  deviceId: string
+}
+
+/** 蓝牙服务 */
+export interface IBLEServices {
+  /** 蓝牙设备此特征值的 uuid */
+  writeCharaterId: string
+  /** 蓝牙设备此服务的 uuid */
+  writeServiceId: string
+  /** 蓝牙设备此特征值的 uuid */
+  notifyCharaterId: string
+  /** 蓝牙设备此服务的 uuid */
+  notifyServiceId: string
+  /** 蓝牙设备此特征值的 uuid */
+  readCharaterId: string
+  /** 蓝牙设备此服务的 uuid */
+  readServiceId: string
+}

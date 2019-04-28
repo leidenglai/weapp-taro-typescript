@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Navigator, Text } from '@tarojs/components'
-import './index.scss'
 import wrapUserAuth from '@/components/HOC/wrapUserAuth'
+import { Navigator, Text, View } from '@tarojs/components'
+import './index.scss'
 
 @wrapUserAuth
 class IndexPage extends Component {
@@ -13,6 +13,17 @@ class IndexPage extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = { navigationBarTitleText: '首页' }
+
+  /**
+   * 退出登录
+   */
+  handleLogout = () => {
+    // 清除token
+    Taro.removeStorageSync('access_token')
+
+    // 跳转登录页
+    Taro.reLaunch({ url: '/pages/account/login/index' })
+  }
 
   render () {
     return (
@@ -47,6 +58,12 @@ class IndexPage extends Component {
               <Text className='icon iconNavBlurt' />
               <View className='title'>蓝牙连接</View>
             </Navigator>
+          </View>
+          <View className='index__item-card'>
+            <View className='index__card-box' onClick={this.handleLogout}>
+              <Text className='icon iconNavLogout' />
+              <View className='title'>退出</View>
+            </View>
           </View>
         </View>
       </View>

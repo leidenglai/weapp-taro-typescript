@@ -1,12 +1,12 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { observer, inject } from '@tarojs/mobx'
-import { View, Text, Image } from '@tarojs/components'
-import './index.scss'
-import { IProductStore } from '@/stores/productStore'
-import { ILiProductInfo } from '@/interfaces/product'
 import transformPrice from '@/utils/transformPrice'
-import { AtButton } from 'taro-ui'
 import wrapUserAuth from '@/components/HOC/wrapUserAuth'
+import { AtButton } from 'taro-ui'
+import { ILiProductInfo } from '@/interfaces/product'
+import { Image, Text, View } from '@tarojs/components'
+import { inject, observer } from '@tarojs/mobx'
+import { IProductStore } from '@/stores/productStore'
+import './index.scss'
 
 interface InjectStoreProps {
   productStore: IProductStore
@@ -51,7 +51,9 @@ class ProductPage extends Component {
    * 下拉刷新处理
    */
   onPullDownRefresh () {
-    this.inject.productStore.fetchProductData()
+    this.inject.productStore.fetchProductData().then(() => {
+      Taro.stopPullDownRefresh()
+    })
   }
 
   /**
@@ -59,9 +61,9 @@ class ProductPage extends Component {
    * 触底加载新数据
    */
   onReachBottom () {
-    const { productStore: { productListData, fetchProductData }} = this.inject
+    const { productStore: { listIsEnd, productListData, fetchProductData }} = this.inject
 
-    if (productListData.ids.length < productListData.count) {
+    if (!listIsEnd) {
       // 加载下一页内容
       fetchProductData({ page: productListData.page + 1 })
     }

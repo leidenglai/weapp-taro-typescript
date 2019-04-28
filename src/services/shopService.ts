@@ -4,7 +4,7 @@ import { IOrderDetail } from '@/interfaces/order'
 import { ISalesData, ISalesType } from '@/interfaces/dashborad'
 
 /**
- * 对应后端店铺相关 API
+ * 对应后端商家端相关 API
  */
 class ShopService {
   /**
@@ -25,6 +25,24 @@ class ShopService {
     return requestData({
       method: 'GET',
       api: 'product/item',
+      params
+    })
+  }
+
+  /**
+   * 获取商品富文本描述
+   * @param params
+   */
+  fetchProductDesc (params: {
+  product_id: number
+  }): Promise<{
+    product_id: number
+    /** 富文本描诉 HTML */
+    content: string
+    }> {
+    return requestData({
+      method: 'GET',
+      api: 'product/get_content_detail',
       params
     })
   }
@@ -104,6 +122,17 @@ class ShopService {
     return requestData({
       method: 'GET',
       api: 'order/statistics_lists',
+      params
+    })
+  }
+
+  /**
+   * 修改库存
+   */
+  fetchUpdateSkuStock (params: { product_id: number; product_sku: string; number: number }): Promise<void> {
+    return requestData({
+      method: 'POST',
+      api: 'product/set_stock',
       params
     })
   }

@@ -1,9 +1,9 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View } from '@tarojs/components'
-import { AtForm, AtInput, AtButton } from 'taro-ui'
-import './index.scss'
-import userService from '@/services/userService'
 import mockPromise from '@/utils/mockPromise'
+import Taro, { Component, Config } from '@tarojs/taro'
+import userService from '@/services/userService'
+import { AtButton, AtForm, AtInput } from 'taro-ui'
+import { View } from '@tarojs/components'
+import './index.scss'
 
 /** 当前页面路由参数 */
 interface IRouter {

@@ -1,25 +1,7 @@
 import { observable } from 'mobx'
+import { IBLEServices } from '@/interfaces/common'
 
 export interface ICommonStore {
-  /** 蓝牙数据 */
-  BLEInformation: {
-    platform: string
-    /** 设备的 id */
-    deviceId: string
-    /** 蓝牙设备此特征值的 uuid */
-    writeCharaterId: string
-    /** 蓝牙设备此服务的 uuid */
-    writeServiceId: string
-    /** 蓝牙设备此特征值的 uuid */
-    notifyCharaterId: string
-    /** 蓝牙设备此服务的 uuid */
-    notifyServiceId: string
-    /** 蓝牙设备此特征值的 uuid */
-    readCharaterId: string
-    /** 蓝牙设备此服务的 uuid */
-    readServiceId: string
-  }
-
   /** 系统信息 */
   sysinfo: {
     model: string
@@ -28,6 +10,15 @@ export interface ICommonStore {
     platform: string
     SDKVersion: string
   }
+
+  /** 是否已连接低功耗蓝牙 */
+  isBELconnect: boolean
+
+  /** 是否已获取低功耗蓝牙服务 */
+  isBELservices: boolean
+
+  /** 蓝牙服务 */
+  BLEServices: IBLEServices
 }
 
 /**
@@ -35,24 +26,28 @@ export interface ICommonStore {
  **/
 class CommonStore implements ICommonStore {
   @observable
-  BLEInformation = {
-    platform: '',
-    deviceId: '',
-    writeCharaterId: '',
-    writeServiceId: '',
-    notifyCharaterId: '',
-    notifyServiceId: '',
-    readCharaterId: '',
-    readServiceId: ''
-  }
-
-  @observable
   sysinfo = {
     model: '',
     version: '',
     system: '',
     platform: '',
     SDKVersion: ''
+  }
+
+  @observable
+  isBELconnect = false
+
+  @observable
+  isBELservices = false
+
+  // 不用转换为observable
+  BLEServices = {
+    writeCharaterId: '',
+    writeServiceId: '',
+    notifyCharaterId: '',
+    notifyServiceId: '',
+    readCharaterId: '',
+    readServiceId: ''
   }
 }
 

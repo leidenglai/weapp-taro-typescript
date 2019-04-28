@@ -60,10 +60,10 @@ $component: '.app-product';
     }
 
     &__bottom {
-      font-size: 22px;
-      font-weight: 400;
-      margin-top: 48px;
       display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 60px;
 
       .price {
         font-size: 30px;
@@ -85,13 +85,16 @@ $component: '.app-product';
           width: 50px;
           height: 20px;
           background-size: 100%;
-          background-image: url('../../../assets/images/icon/icon-vip.png');
+          background-image: url('../../assets/images/icon/icon-vip.png');
         }
       }
     }
 
     &__bottom-left {
       flex: 1;
+      display: flex;
+      color: #ff2c00;
+      align-items: flex-end;
     }
 
     &__action-wrap {

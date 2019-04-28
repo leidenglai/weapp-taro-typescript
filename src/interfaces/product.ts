@@ -42,6 +42,16 @@ export interface IProductDetail extends ISimpleProduct {
   context?: string
   /** 上架数量 */
   on_stock_num: number
+  /** 富文本详情 */
+  content: string
+  /** 库存信息 */
+  stock_lists: {
+    name: string
+    /** SKU Id */
+    product_sku: string
+    /** 库存 */
+    number: number
+  }[]
 }
 
 export interface ISkuSelected {
