@@ -267,9 +267,10 @@
     vinyl "^2.1.0"
     vinyl-fs "^3.0.2"
 
-"@tarojs/components@^1.2.17":
+"@tarojs/components@1.2.17":
   version "1.2.17"
-  resolved "http://registry.npm.taobao.org/@tarojs/components/download/@tarojs/components-1.2.17.tgz#a79f3f51bf146851064ddce997c361d5a67ea686"
+  resolved "https://registry.npm.taobao.org/@tarojs/components/download/@tarojs/components-1.2.17.tgz#a79f3f51bf146851064ddce997c361d5a67ea686"
+  integrity sha1-p58/Ub8UaFEGTdzpl8Nh1aZ+poY=
   dependencies:
     better-scroll "^1.14.1"
     classnames "^2.2.5"
@@ -311,11 +312,12 @@
   dependencies:
     less "^3.0.4"
 
-"@tarojs/plugin-sass@^1.2.17":
-  version "1.2.23"
-  resolved "http://registry.npm.taobao.org/@tarojs/plugin-sass/download/@tarojs/plugin-sass-1.2.23.tgz#438305c3d7a92d55b6cec76527389b88ef15056a"
+"@tarojs/plugin-sass@1.2.17":
+  version "1.2.17"
+  resolved "https://registry.npm.taobao.org/@tarojs/plugin-sass/download/@tarojs/plugin-sass-1.2.17.tgz#2bc61794e0d6ceb5239c0dc05ecf9d9c36b7d2d1"
+  integrity sha1-K8YXlODWzrUjnA3AXs+dnDa30tE=
   dependencies:
-    dart-sass "^1.17.4"
+    node-sass "^4.11.0"
 
 "@tarojs/plugin-uglifyjs@1.2.17":
   version "1.2.17"
@@ -2623,12 +2625,6 @@ d@1:
   resolved "http://registry.npm.taobao.org/d/download/d-1.0.0.tgz#754bb5bfe55451da69a58b94d45f4c5b0462d58f"
   dependencies:
     es5-ext "^0.10.9"
-
-dart-sass@^1.17.4:
-  version "1.17.4"
-  resolved "http://registry.npm.taobao.org/dart-sass/download/dart-sass-1.17.4.tgz#9d03b3944977b504144f1d3df40287595ba45a3a"
-  dependencies:
-    chokidar "^2.0.0"
 
 dashdash@^1.12.0:
   version "1.14.1"
@@ -4961,6 +4957,11 @@ lodash@4.17.11, lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.3,
   version "4.17.11"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.11.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Flodash%2Fdownload%2Flodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
+lodash@4.17.15, lodash@^4.17.15:
+  version "4.17.15"
+  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
+
 log-symbols@^2.0.0, log-symbols@^2.1.0, log-symbols@^2.2.0:
   version "2.2.0"
   resolved "http://registry.npm.taobao.org/log-symbols/download/log-symbols-2.2.0.tgz#5740e1c5d6f0dfda4ad9323b5332107ef6b4c40a"
@@ -5369,6 +5370,11 @@ nan@^2.10.0, nan@^2.9.2:
   version "2.13.0"
   resolved "http://registry.npm.taobao.org/nan/download/nan-2.13.0.tgz#7bdfc27dd3c060c46e60b62c72b74012d1a4cd68"
 
+nan@^2.13.2:
+  version "2.14.0"
+  resolved "https://registry.npm.taobao.org/nan/download/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
+  integrity sha1-eBj3IgJ7JFmobwKV1DTR/CM2xSw=
+
 nanomatch@^1.2.9:
   version "1.2.13"
   resolved "http://registry.npm.taobao.org/nanomatch/download/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
@@ -5529,6 +5535,29 @@ node-sass@4.11.0:
     meow "^3.7.0"
     mkdirp "^0.5.1"
     nan "^2.10.0"
+    node-gyp "^3.8.0"
+    npmlog "^4.0.0"
+    request "^2.88.0"
+    sass-graph "^2.2.4"
+    stdout-stream "^1.4.0"
+    "true-case-path" "^1.0.2"
+
+node-sass@^4.11.0:
+  version "4.13.0"
+  resolved "https://registry.npm.taobao.org/node-sass/download/node-sass-4.13.0.tgz?cache=0&sync_timestamp=1571900028013&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnode-sass%2Fdownload%2Fnode-sass-4.13.0.tgz#b647288babdd6a1cb726de4545516b31f90da066"
+  integrity sha1-tkcoi6vdahy3Jt5FRVFrMfkNoGY=
+  dependencies:
+    async-foreach "^0.1.3"
+    chalk "^1.1.1"
+    cross-spawn "^3.0.0"
+    gaze "^1.0.0"
+    get-stdin "^4.0.1"
+    glob "^7.0.3"
+    in-publish "^2.0.0"
+    lodash "^4.17.15"
+    meow "^3.7.0"
+    mkdirp "^0.5.1"
+    nan "^2.13.2"
     node-gyp "^3.8.0"
     npmlog "^4.0.0"
     request "^2.88.0"
