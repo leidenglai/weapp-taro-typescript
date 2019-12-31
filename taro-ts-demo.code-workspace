@@ -11,8 +11,6 @@
       "**/dist/**": true
     },
     "sync.gist": "7b096d9f0a4ac0c68f727930c27fd8f4",
-    "sync.forceDownload": true,
-    "prettier.stylelintIntegration": true,
-    "prettier.eslintIntegration": true
+    "sync.forceDownload": true
   }
 }
