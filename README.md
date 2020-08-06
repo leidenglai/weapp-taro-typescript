@@ -101,3 +101,6 @@ yarn build:weapp
 ##**PS**
 
 1.  如果出现 node-saas 导致安装失败，可以将 yarn 源切换到淘宝的再试试 `yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g`
+
+> Node-sass 比较特殊，建议提前进行安装，规避可能出现的各种异常错误。
+> npm i -g node-sass --sass_binary_site=https://npm.taobao.org/mirrors/node_sass/

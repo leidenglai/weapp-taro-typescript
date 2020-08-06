@@ -8,8 +8,8 @@ import { isObservable, toJS } from 'mobx'
  *请求后端数据封装
  *@returns 直接返回data或者错误对象
  */
-export default function requestData ({ api, params = {}, method = 'GET' }: IReqData) {
-  return new Promise((resolve: (data: any) => void, reject: (err: IResError) => void) => {
+export default function requestData<T = void> ({ api, params = {}, method = 'GET' }: IReqData) {
+  return new Promise<T>((resolve: (data) => void, reject: (err: IResError) => void) => {
     const completeApi = SERVER_PROTOCOL + SERVER_API_ROOT_API + api
     const mergeData = Object.assign({}, DEF_REQUEST_CONFIG, params)
     const requestParams = {}
