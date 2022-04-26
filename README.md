@@ -1,3 +1,5 @@
+## 现在taro更新变化较大，所以本项目仅做参考学习 2022/04/26
+
 # 使用 React 和 TypeScript 写小程序
 
 微信小程序端，使用 Taro 框架。React+TypeScript 语法，Mobx 管理数据，Taro UI 框架。
